@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<head>
+  
+	<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+	
+	<title>Google Map Slider</title>
+	
+	<link rel='stylesheet' type='text/css' href='css/style.css' />
+  	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+  <script type='text/javascript' src='js/example.js'></script>
+  <script type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=true'></script>
+  
+  <script type='text/javascript'>
+  
+    $(function() {
+    
+      var Lavigerie = new google.maps.LatLng(45.133333, 2.766667),
+          pointToMoveTo, 
+          first = true,
+          curMarker = new google.maps.Marker({}),
+          $el;
+      
+      var myOptions = {
+          zoom: 13,
+          center: Lavigerie,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+      
+      var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+    
+      $("#locations li").mouseenter(function() {
+      
+        $el = $(this);
+                
+        if (!$el.hasClass("hover")) {
+        
+          $("#locations li").removeClass("hover");
+          $el.addClass("hover");
+        
+          if (!first) { 
+            
+            // Clear current marker
+            curMarker.setMap(); 
+            
+            // Set zoom back to Chicago level
+            // map.setZoom(10);
+          }
+          
+          // Move (pan) map to new location
+          pointToMoveTo = new google.maps.LatLng($el.attr("data-geo-lat"), $el.attr("data-geo-long"));
+          map.panTo(pointToMoveTo);
+          
+          // Add new marker
+          curMarker = new google.maps.Marker({
+              position: pointToMoveTo,
+              map: map,
+              icon: "images/marker.png"
+          });
+          
+          // On click, zoom map
+          google.maps.event.addListener(curMarker, 'click', function() {
+             map.setZoom(14);
+          });
+          
+          // Fill more info area
+          $("#more-info")
+            .find("h2")
+              .html($el.find("h3").html())
+              .end()
+            .find("p")
+              .html($el.find(".longdesc").html());
+          
+          // No longer the first time through (re: marker clearing)        
+          first = false; 
+        }
+        
+      });
+      
+      $("#locations li:first").trigger("mouseenter");
+      
+    });
+
+  </script>
+
+</head>
+
+<body>
+
+	<div id="page-wrap">
+	
+	   <h1>Habiter la vallée</h1>
+	   
+	   <ul id="locations">
+	   <h2>Habitants</h2>
+        <li data-geo-lat="45.159612" data-geo-long="2.787603">
+          <h3>Nadège et Julien</h3>
+          <p>la commune de la vallée de la Santoire</p>
+         <div class="longdesc">
+         <img class="image" src="images/DSC02637.JPG" width="250" height="188" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>		
+        </li>
+        
+        <li data-geo-lat="45.179072" data-geo-long="2.78203">
+          <h3>Éric et Fabienne</h3>     
+          <p>un sommet du plateau du Limon</p>
+                   <div class="longdesc">
+<img class="image" src="images/DSC02648.JPG" width="301" height="176" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>
+        </li>
+        
+        <li data-geo-lat=" 45.129984" data-geo-long="2.703152">
+          <h3>Marc et Sarah</h3>
+          <p>Avant le buron d'Eylac</p>
+         <div class="longdesc">
+         <img class="image" src="images/DSC02914.JPG" width="249" height="146" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>
+				 </li>
+        
+        <li data-geo-lat="45.103214" data-geo-long="2.716842">
+          <h3>Stéphane et Virginie</h3>
+       
+          <p>montée vers Peyre Arse</p>
+                   <div class="longdesc">
+        <img class="image" src="images/DSC05188.JPG" width="250" height="188" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>
+          </li>
+				
+			<li data-geo-lat="45.103214" data-geo-long="2.716842">
+          <h3>Le col de Cabre</h3>
+          <p>montée vers Peyre Arse</p>
+                  <div class="longdesc">
+         <img class="image" src="images/nadege-julien.JPG" width="250" height="188" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>
+				</li>
+			
+			<li data-geo-lat="45.103214" data-geo-long="2.716842">
+          <h3>Le col de Cabre</h3>
+          <p>montée vers Peyre Arse</p>
+                   <div class="longdesc">
+         <img class="image" src="images/DSC02914.JPG" width="249" height="146" alt="" />
+          <p class="center">Lorem ipsum dolor sit amet, consecteteur. Cursus. Taciti justo aenean enim, odio imperdiet eu, lacus ut ipsum mi. Litora netus facilisi eni vivamus id lorem tortor litora ve magnis eu. Tempus. Ornare libero per pretium ut, curabitur hymenaeos nunc quam. Per eget ve. Donec. Lacinia fusce, ve dolor et. Non, pede sagittis varius, libero. Feugiat. Enim, eni ac magnis nisi nunc integer erat, sollicitudin vestibulum urna. Orci nascetur morbi odio.	
+				</p>
+				<audio class="lecteur" src="audio/Messenger.mp3" controls="controls"></audio>
+				</div>
+				</li>
+        
+     </ul>
+
+     <div id="map_canvas"></div>
+     
+     <div id="more-info"><div>
+     
+        <h2>More Info</h2>
+        <p>Hover over location on the left. (JavaScript must be enabled)</p>
+     
+     </div></div>
+			
+	</div>
+	
+</body>
+
+</html>
